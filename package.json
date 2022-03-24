@@ -1,0 +1,15 @@
+{
+  "name": "scrapper",
+  "version": "1.0.0",
+  "description": "scrapper",
+  "main": "background.js",
+  "author": "Piero",
+  "license": "MIT",
+  "dependencies": {
+    "esbuild": "^0.14.27"
+  },
+  "scripts": {
+    "dev": "node scripts/watch.js"
+  }
+
+}
