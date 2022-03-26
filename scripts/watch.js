@@ -4,7 +4,7 @@ require('esbuild').build({
     bundle: true,
     inject: ['config/env.js'],
     watch: true,
-    
+    minify: true 
   }).then(result => {
     console.log('watching...')
     console.log(result)

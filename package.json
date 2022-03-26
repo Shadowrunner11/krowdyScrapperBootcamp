@@ -11,5 +11,8 @@
   },
   "scripts": {
     "dev": "node scripts/watch.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.12.0"
   }
 }

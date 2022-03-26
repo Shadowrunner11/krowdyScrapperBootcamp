@@ -1,40 +1,33 @@
-import { Education } from "../modules/Models/Education"
-import { Person } from "../modules/Models/Person"
+import { Education } from '../modules/Models/Education';
+import { Person } from '../modules/Models/Person';
+import { xpathEval } from '../modules/Utils/evaluators';
 
-const getUlByText = text =>{
-    return document.evaluate(
-        `(//section[.//span[contains(text(),"${text}")] or .//div[contains(text(),"${text}")]]//ul)[1]`, 
-        document, 
-        null, 
-        XPathResult.ANY_TYPE, 
-        null).iterateNext()
-}
 
-const fullname= document.querySelector('h1')?.textContent
+const getUlByText = text => xpathEval(XPATH_SECTION_INFO(text), document).iterateNext();
 
-const nodeUlEducation= getUlByText("Educación")
+const fullname = document.querySelector('h1')?.textContent;
 
-let listItemsEducation = document.evaluate('./li', nodeUlEducation, null, XPathResult.ANY_TYPE, null)
+const nodeUlEducation= getUlByText('Educación');
 
-let educationIterate = listItemsEducation.iterateNext()
-const educationListItems =[]
+let listItemsEducation = xpathEval(XPATH_LIST_ITEMS_EDUCATION, nodeUlEducation);
+
+let educationIterate = listItemsEducation.iterateNext();
+const educationListItems =[];
 
 
 while(educationIterate){
-    const spansEducation =  document.evaluate(XPATH_SPAN_EDUCATION, educationIterate, null, XPathResult.ANY_TYPE, null)
-    let spansEducationIterator = spansEducation.iterateNext()
-    const educationArray = []
-    while(spansEducationIterator){
-        educationArray.push(spansEducationIterator.textContent)
-        spansEducationIterator = spansEducation.iterateNext()
-    }
-    educationListItems.push(new Education(educationArray[0], educationArray[1], educationArray[2]))
-    educationIterate = listItemsEducation.iterateNext()
+	const spansEducation =  xpathEval(XPATH_SPAN_EDUCATION, educationIterate);
+	let spansEducationIterator = spansEducation.iterateNext();
+	const educationArray = [];
+	while(spansEducationIterator){
+		educationArray.push(spansEducationIterator.textContent);
+		spansEducationIterator = spansEducation.iterateNext();
+	}
+	educationListItems.push(new Education(educationArray[0], educationArray[1], educationArray[2]));
+	educationIterate = listItemsEducation.iterateNext();
 }
 
 
 
-let port = chrome.runtime.connect({name:'safePort'})
-
-
-port.postMessage(new Person(fullname, educationListItems))
+let port = chrome.runtime.connect({name:'safePort'});
+port.postMessage(new Person(fullname, educationListItems));
