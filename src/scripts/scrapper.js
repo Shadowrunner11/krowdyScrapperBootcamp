@@ -10,9 +10,7 @@ const getUlByText = text =>{
         null).iterateNext()
 }
 
-const fullname= document.querySelector('body > main > h1')?.textContent
-
-console.log(fullname)
+const fullname= document.querySelector('h1')?.textContent
 
 const nodeUlEducation= getUlByText("Educación")
 
@@ -21,8 +19,9 @@ let listItemsEducation = document.evaluate('./li', nodeUlEducation, null, XPathR
 let educationIterate = listItemsEducation.iterateNext()
 const educationListItems =[]
 
+
 while(educationIterate){
-    const spansEducation =  document.evaluate('.//span[@aria-hidden]', educationIterate, null, XPathResult.ANY_TYPE, null)
+    const spansEducation =  document.evaluate(XPATH_SPAN_EDUCATION, educationIterate, null, XPathResult.ANY_TYPE, null)
     let spansEducationIterator = spansEducation.iterateNext()
     const educationArray = []
     while(spansEducationIterator){

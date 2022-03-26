@@ -1,4 +1,7 @@
 (() => {
+  // config/env.js
+  var XPATH_SPAN_EDUCATION = ".//span[@aria-hidden]";
+
   // src/modules/Models/Education.js
   var Education = class {
     constructor(institution, description, date) {
@@ -20,14 +23,13 @@
   var getUlByText = (text) => {
     return document.evaluate(`(//section[.//span[contains(text(),"${text}")] or .//div[contains(text(),"${text}")]]//ul)[1]`, document, null, XPathResult.ANY_TYPE, null).iterateNext();
   };
-  var fullname = document.querySelector("body > main > h1")?.textContent;
-  console.log(fullname);
+  var fullname = document.querySelector("h1")?.textContent;
   var nodeUlEducation = getUlByText("Educaci\xF3n");
   var listItemsEducation = document.evaluate("./li", nodeUlEducation, null, XPathResult.ANY_TYPE, null);
   var educationIterate = listItemsEducation.iterateNext();
   var educationListItems = [];
   while (educationIterate) {
-    const spansEducation = document.evaluate(".//span[@aria-hidden]", educationIterate, null, XPathResult.ANY_TYPE, null);
+    const spansEducation = document.evaluate(XPATH_SPAN_EDUCATION, educationIterate, null, XPathResult.ANY_TYPE, null);
     let spansEducationIterator = spansEducation.iterateNext();
     const educationArray = [];
     while (spansEducationIterator) {
