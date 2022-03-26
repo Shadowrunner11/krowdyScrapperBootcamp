@@ -6,10 +6,10 @@
   "author": "Piero",
   "license": "MIT",
   "dependencies": {
+    "dexie": "^3.2.1",
     "esbuild": "^0.14.27"
   },
   "scripts": {
     "dev": "node scripts/watch.js"
   }
-
 }
